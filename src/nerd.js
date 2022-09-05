@@ -24,9 +24,9 @@ function useTable(totalFrames, totalStars, fps) {
         v0: pv,
         t0: 0,
         t: 1000 / fps,
-        k: 256, // stiffness
-        c: 52, // damping
-        m: 4, // mass
+        k: 32, // stiffness
+        c: 256, // damping
+        m: 256, // mass
         X: target,
       });
       px = x;

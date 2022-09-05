@@ -17,16 +17,16 @@ function useTable(totalFrames, totalStars, fps) {
     let pv = 0;
     for (let frame = 0; frame < totalFrames; frame++) {
       const target = Math.ceil(
-        easeInOutCirc(frame / (totalFrames - 1)) * totalStars
+        easeInOutSine(frame / (totalFrames - 1)) * totalStars
       );
       const { x, v } = spring({
         x0: px,
         v0: pv,
         t0: 0,
         t: 1000 / fps,
-        k: 24, // stiffness
-        c: 20, // damping
-        m: 0.5, // mass
+        k: 256, // stiffness
+        c: 52, // damping
+        m: 4, // mass
         X: target,
       });
       px = x;

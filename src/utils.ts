@@ -1,4 +1,4 @@
-const { sqrt, exp, sin, cos } = Math;
+const { sqrt, exp, sin, cos, pow } = Math;
 
 export function getProgress(
   frame: number,
@@ -19,16 +19,16 @@ function getTable(totalFrames: number, totalStars: number, fps: number) {
   let pv = 0;
   for (let frame = 0; frame < totalFrames; frame++) {
     const target = Math.ceil(
-      easeInOutCubic(frame / (totalFrames - 1)) * totalStars,
+      easeInOutQuad(frame / (totalFrames - 1)) * totalStars,
     );
     const { x, v } = customSpring({
       x0: px,
       v0: pv,
       t0: 0,
       t: 1000 / fps,
-      k: 170, // Stiffness
-      c: 26, // Damping
-      m: 1, // Mass
+      k: 256, // Stiffness
+      c: 52, // Damping
+      m: 4, // Mass
       X: target,
     });
     px = x;
@@ -39,6 +39,17 @@ function getTable(totalFrames: number, totalStars: number, fps: number) {
 }
 function easeInOutCubic(x: number) {
   return x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2;
+}
+function easeInOutQuad(x) {
+  return x < 0.5 ? 2 * x * x : 1 - pow(-2 * x + 2, 2) / 2;
+}
+function easeInOutSine(x) {
+  return -(Math.cos(Math.PI * x) - 1) / 2;
+}
+function easeInOutCirc(x) {
+  return x < 0.5
+    ? (1 - sqrt(1 - pow(2 * x, 2))) / 2
+    : (sqrt(1 - pow(-2 * x + 2, 2)) + 1) / 2;
 }
 
 // From  https://github.com/pomber/use-spring/blob/master/src/spring.ts
